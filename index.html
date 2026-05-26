@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unledgered — Your True Virtual CFO</title>
+  <meta name="description" content="For founders, operators, and CFOs. Unledgered turns raw numbers into clear answers and next steps.">
+  <meta property="og:title" content="Unledgered — Your True Virtual CFO">
+  <meta property="og:description" content="AI-powered financial intelligence for founders, operators, and CFOs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unledgered.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; color: #0a0a0a; background: #fff; line-height: 1.6; }
+    ::selection { background: #0d9488; color: #fff; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ─── TYPOGRAPHY ─── */
+    .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+    .font-mono { font-family: 'Space Mono', monospace; }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 1024px) { .container { padding: 0 32px; } }
+
+    /* ─── GRID BACKGROUND ─── */
+    .grid-bg {
+      background-image: linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-icon {
+      width: 28px; height: 28px; border-radius: 50%; border: 2px solid #0a0a0a;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-links { display: none; align-items: center; gap: 8px; }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-pill {
+      font-family: 'Space Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 9999px; border: 1px solid #e5e7eb; color: #6b7280;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-pill:hover { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
+    .nav-ctas { display: flex; align-items: center; gap: 12px; }
+    .nav-cta-outline {
+      display: none; font-family: 'Space Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 9999px; border: 1px solid #e5e7eb; color: #6b7280;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media (min-width: 640px) { .nav-cta-outline { display: block; } }
+    .nav-cta-outline:hover { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
+    .nav-cta-primary {
+      font-family: 'Space Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 9999px; background: #0a0a0a; color: #fff; border: 1px solid #0a0a0a;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-cta-primary:hover { background: transparent; color: #0a0a0a; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; min-height: 90vh; display: flex; align-items: center; padding-top: 64px;
+    }
+    .hero-grid { position: absolute; inset: 0; opacity: 0.35; }
+    .hero-orb {
+      position: absolute; top: 15%; right: -5%; width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(13,148,136,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; padding: 96px 0 80px; max-width: 680px; }
+    @media (min-width: 1024px) { .hero-content { padding: 128px 0 96px; } }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 9999px; border: 1px solid #e5e7eb; margin-bottom: 32px;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #14b8a6; }
+    .hero-badge-text { font-family: 'Space Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; }
+    .hero-h1 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.025em;
+      line-height: 1.05; margin-bottom: 24px;
+      font-size: clamp(2.75rem, 6vw, 4.5rem);
+    }
+    .hero-h1 span { color: #0d9488; }
+    .hero-sub { font-size: 1.125rem; color: #6b7280; line-height: 1.7; max-width: 540px; margin-bottom: 40px; }
+    @media (min-width: 640px) { .hero-sub { font-size: 1.25rem; } }
+
+    /* ─── FORMS ─── */
+    .waitlist-form { display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin-bottom: 24px; }
+    @media (min-width: 640px) { .waitlist-form { flex-direction: row; } }
+    .waitlist-input {
+      flex: 1; font-family: 'Inter', sans-serif; font-size: 0.9375rem;
+      padding: 14px 20px; border: 1px solid #e5e7eb; background: #fff; outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .waitlist-input:focus { border-color: #0d9488; }
+    .waitlist-input::placeholder { color: #d1d5db; }
+    .btn-primary {
+      font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 14px 28px; background: #0a0a0a; color: #fff; border: 1px solid #0a0a0a;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); white-space: nowrap;
+    }
+    .btn-primary:hover { background: transparent; color: #0a0a0a; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 14px 28px; background: transparent; color: #0a0a0a; border: 1px solid #e5e7eb;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-secondary:hover { border-color: #0a0a0a; }
+    .hero-links { display: flex; align-items: center; gap: 16px; }
+    .hero-note { font-size: 0.875rem; color: #d1d5db; }
+    .success-msg {
+      display: flex; align-items: center; gap: 8px;
+      padding: 14px 20px; background: #f0fdfa; border: 1px solid #99f6e4; width: 100%;
+    }
+    .success-msg span { color: #0f766e; font-size: 0.875rem; font-weight: 500; }
+
+    /* ─── FEATURES ─── */
+    .features { position: relative; padding: 96px 0; }
+    @media (min-width: 1024px) { .features { padding: 128px 0; } }
+    .section-badge {
+      display: inline-flex; align-items: center; padding: 6px 16px;
+      border-radius: 9999px; border: 1px solid #e5e7eb; margin-bottom: 32px;
+    }
+    .section-badge-text { font-family: 'Space Mono', monospace; font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: #9ca3af; }
+    .features-h2 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.025em;
+      line-height: 1.1; margin-bottom: 16px; max-width: 560px;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+    }
+    .features-h2 span { color: #d1d5db; }
+    .features-sub { font-size: 1.125rem; color: #6b7280; margin-bottom: 64px; max-width: 520px; }
+    .features-grid { display: grid; gap: 48px; align-items: start; }
+    @media (min-width: 1024px) { .features-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    /* Accordion */
+    .accordion-item { border-bottom: 1px solid #f3f4f6; }
+    .accordion-item:first-child { border-top: 1px solid #f3f4f6; }
+    .accordion-btn {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; text-align: left;
+    }
+    .accordion-title {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 500;
+      color: #d1d5db; transition: color 0.2s ease;
+    }
+    @media (min-width: 640px) { .accordion-title { font-size: 1.5rem; } }
+    .accordion-item.active .accordion-title { color: #0a0a0a; }
+    .accordion-icon {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .accordion-body {
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+    }
+    .accordion-item.active .accordion-body { max-height: 300px; opacity: 1; }
+    .accordion-text { color: #6b7280; line-height: 1.7; padding-bottom: 20px; padding-right: 48px; }
+
+    /* Visual panel */
+    .visual-panel { position: relative; }
+    @media (min-width: 1024px) { .visual-sticky { position: sticky; top: 96px; } }
+    .visual-frame {
+      background: #f9fafb; border-radius: 12px; border: 1px solid #f3f4f6; padding: 32px;
+    }
+    @media (min-width: 1024px) { .visual-frame { padding: 40px; } }
+    .visual-dots { display: flex; gap: 6px; margin-bottom: 24px; }
+    .visual-dot { width: 10px; height: 10px; border-radius: 50%; background: #e5e7eb; }
+    .visual-content { min-height: 280px; }
+
+    /* Cards inside visual */
+    .v-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .v-label { font-family: 'Space Mono', monospace; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
+    .v-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.125rem; font-weight: 600; margin-top: 4px; }
+    .v-dot { width: 8px; height: 8px; border-radius: 50%; background: #14b8a6; }
+    .v-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .v-card { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #f3f4f6; }
+    .v-card-label { font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px; }
+    .v-card-value { font-size: 1.25rem; font-weight: 600; }
+    .v-card-change { font-size: 0.75rem; margin-top: 4px; }
+    .v-card-change.positive { color: #0d9488; }
+    .v-card-change.neutral { color: #9ca3af; }
+    .v-stack { display: flex; flex-direction: column; gap: 12px; }
+    .v-row {
+      background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #f3f4f6;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .v-row-left { display: flex; align-items: center; gap: 12px; }
+    .v-row-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .v-row-dot.green { background: #14b8a6; }
+    .v-row-dot.amber { background: #f59e0b; }
+    .v-row-dot.gray { background: #d1d5db; }
+    .v-row-name { font-size: 0.875rem; font-weight: 500; }
+    .v-row-val { font-size: 0.875rem; color: #9ca3af; font-family: 'Space Mono', monospace; }
+    .v-chat-q { background: #f3f4f6; border-radius: 8px; padding: 12px; max-width: 80%; font-size: 0.875rem; color: #4b5563; }
+    .v-chat-a { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #f3f4f6; margin-left: auto; max-width: 90%; font-size: 0.875rem; color: #374151; line-height: 1.6; }
+    .v-chat-suggest { background: #fff; border-radius: 8px; padding: 12px; border: 1px dashed #99f6e4; }
+    .v-chat-suggest span { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #0d9488; }
+    .v-scenario { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #f3f4f6; }
+    .v-scenario.highlight { border-color: #99f6e4; }
+    .v-scenario-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .v-scenario-name { font-size: 0.875rem; font-weight: 500; }
+    .v-scenario-name.teal { color: #0f766e; }
+    .v-scenario-tag { font-family: 'Space Mono', monospace; font-size: 0.6875rem; color: #9ca3af; }
+    .v-scenario-tag.teal { color: #0d9488; }
+    .v-scenario-metrics { display: flex; gap: 24px; }
+    .v-scenario-metric label { font-size: 0.75rem; color: #9ca3af; display: block; }
+    .v-scenario-metric span { font-size: 0.875rem; font-weight: 600; }
+    .v-scenario-metric span.teal { color: #0f766e; }
+    .v-alert { background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #f3f4f6; border-left: 2px solid; }
+    .v-alert.amber { border-left-color: #f59e0b; }
+    .v-alert.green { border-left-color: #14b8a6; }
+    .v-alert.red { border-left-color: #ef4444; }
+    .v-alert-type { font-family: 'Space Mono', monospace; font-size: 0.6875rem; margin-bottom: 4px; }
+    .v-alert-type.amber { color: #d97706; }
+    .v-alert-type.green { color: #0d9488; }
+    .v-alert-type.red { color: #ef4444; }
+    .v-alert-msg { font-size: 0.875rem; font-weight: 500; }
+    .v-alert-time { font-size: 0.75rem; color: #9ca3af; margin-top: 4px; }
+    .v-empty { display: flex; align-items: center; justify-content: center; height: 200px; }
+    .v-empty span { font-family: 'Space Mono', monospace; font-size: 0.875rem; color: #d1d5db; }
+
+    /* Panel animations */
+    .panel-view { display: none; animation: fadeIn 0.4s ease forwards; }
+    .panel-view.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── HOW IT WORKS ─── */
+    .how { padding: 96px 0; background: rgba(249,250,251,0.5); }
+    @media (min-width: 1024px) { .how { padding: 128px 0; } }
+    .how-h2 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.025em;
+      line-height: 1.1; margin-bottom: 64px; max-width: 480px;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+    }
+    .how-h2 span { color: #d1d5db; }
+    .how-grid { display: grid; gap: 32px; }
+    @media (min-width: 768px) { .how-grid { grid-template-columns: repeat(3, 1fr); gap: 48px; } }
+    .how-step-num { font-family: 'Space Mono', monospace; font-size: 0.875rem; color: #0d9488; letter-spacing: 0.05em; }
+    .how-step-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 600; margin-top: 12px; margin-bottom: 16px; }
+    @media (min-width: 640px) { .how-step-title { font-size: 1.875rem; } }
+    .how-step-text { color: #6b7280; line-height: 1.7; }
+
+    /* ─── CTA ─── */
+    .cta { position: relative; padding: 96px 0; overflow: hidden; text-align: center; }
+    @media (min-width: 1024px) { .cta { padding: 128px 0; } }
+    .cta-bg { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15,118,110,0.03), rgba(20,184,166,0.03)); }
+    .cta-grid { position: absolute; inset: 0; opacity: 0.2; }
+    .cta-h2 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: -0.025em;
+      line-height: 1.1; margin-bottom: 24px;
+      font-size: clamp(2rem, 5vw, 3.75rem);
+    }
+    .cta-h2 span { color: #0d9488; }
+    .cta-sub { font-size: 1.125rem; color: #6b7280; max-width: 440px; margin: 0 auto 40px; }
+    .cta-form { display: flex; flex-direction: column; gap: 12px; max-width: 420px; margin: 0 auto 24px; }
+    @media (min-width: 640px) { .cta-form { flex-direction: row; } }
+
+    /* ─── FOOTER ─── */
+    .footer { border-top: 1px solid #f3f4f6; padding: 32px 0; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    @media (min-width: 640px) { .footer-inner { flex-direction: row; justify-content: space-between; } }
+    .footer-logo { display: flex; align-items: center; gap: 8px; }
+    .footer-logo-icon {
+      width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #0a0a0a;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 0.875rem; font-weight: 600; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-link { font-size: 0.875rem; color: #9ca3af; transition: color 0.2s; }
+    .footer-link:hover { color: #4b5563; }
+    .footer-copy { font-size: 0.875rem; color: #9ca3af; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 10L7 4L11 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="nav-logo-text">Unledgered</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-pill">Features</a>
+        <a href="#how-it-works" class="nav-pill">How it works</a>
+      </div>
+      <div class="nav-ctas">
+        <a href="#waitlist" class="nav-cta-outline">Join Waitlist</a>
+        <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" class="nav-cta-primary">Book a Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid grid-bg"></div>
+    <div class="hero-orb"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span class="hero-badge-text">Early access open</span>
+        </div>
+        <h1 class="hero-h1">Your true<br><span>virtual CFO.</span></h1>
+        <p class="hero-sub">For founders, operators, and CFOs &mdash; Unledgered turns raw numbers into clear answers and next steps. We watch your financials and tell you what matters most.</p>
+        <form id="waitlist" class="waitlist-form" onsubmit="handleWaitlist(event, this)">
+          <input type="email" class="waitlist-input" placeholder="Enter your email address" required>
+          <button type="submit" class="btn-primary">Join Waitlist</button>
+        </form>
+        <div class="hero-links">
+          <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            Book a Demo
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <span class="hero-note">No credit card required</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-badge">
+        <span class="section-badge-text">The platform</span>
+      </div>
+      <h2 class="features-h2">One dashboard.<br><span>Complete clarity.</span></h2>
+      <p class="features-sub">Everything you need to understand, question, and forecast your financial position &mdash; updated in real time.</p>
+
+      <div class="features-grid">
+        <!-- Accordion -->
+        <div>
+          <div class="accordion-item active" data-index="0">
+            <button class="accordion-btn" onclick="toggleAccordion(0)">
+              <span class="accordion-title">Instant financial dashboard</span>
+              <span class="accordion-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-text">Connect your accounts and get a live, role-aware dashboard in minutes &mdash; not weeks. Revenue, burn, runway, margins, and cash position update automatically so you always know where you stand.</p>
+            </div>
+          </div>
+          <div class="accordion-item" data-index="1">
+            <button class="accordion-btn" onclick="toggleAccordion(1)">
+              <span class="accordion-title">Customizable KPIs</span>
+              <span class="accordion-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="4" x2="8" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-text">Every business tracks different numbers. Choose the metrics that matter to your role and industry, set benchmarks, and watch Unledgered surface what needs attention before you have to ask.</p>
+            </div>
+          </div>
+          <div class="accordion-item" data-index="2">
+            <button class="accordion-btn" onclick="toggleAccordion(2)">
+              <span class="accordion-title">AI-powered chat insights</span>
+              <span class="accordion-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="4" x2="8" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-text">Ask questions in plain English. &ldquo;Why did margins drop in March?&rdquo; or &ldquo;What happens if we delay hiring by a quarter?&rdquo; Our foundational AI, Nova, gives you answers grounded in your actual data.</p>
+            </div>
+          </div>
+          <div class="accordion-item" data-index="3">
+            <button class="accordion-btn" onclick="toggleAccordion(3)">
+              <span class="accordion-title">Scenario planning</span>
+              <span class="accordion-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="4" x2="8" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-text">Model best-case, worst-case, and everything in between. Adjust revenue assumptions, headcount timing, or capital raises and see the impact on your runway and cash flow instantly.</p>
+            </div>
+          </div>
+          <div class="accordion-item" data-index="4">
+            <button class="accordion-btn" onclick="toggleAccordion(4)">
+              <span class="accordion-title">Proactive alerts</span>
+              <span class="accordion-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="4" x2="8" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-text">Unledgered watches your financials around the clock and flags anomalies, trend shifts, and approaching thresholds before they become problems. Think of it as a CFO that never sleeps.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual Panel -->
+        <div class="visual-panel">
+          <div class="visual-sticky">
+            <div class="visual-frame">
+              <div class="visual-dots"><div class="visual-dot"></div><div class="visual-dot"></div><div class="visual-dot"></div></div>
+              <div class="visual-content">
+
+                <!-- Panel 0: Dashboard -->
+                <div class="panel-view active" data-panel="0">
+                  <div class="v-header">
+                    <div><p class="v-label">Dashboard</p><p class="v-title">Financial Overview</p></div>
+                    <div class="v-dot"></div>
+                  </div>
+                  <div class="v-grid">
+                    <div class="v-card"><p class="v-card-label">Revenue</p><p class="v-card-value">$482K</p><p class="v-card-change positive">+12.3% MoM</p></div>
+                    <div class="v-card"><p class="v-card-label">Burn Rate</p><p class="v-card-value">$89K</p><p class="v-card-change neutral">-4.1% MoM</p></div>
+                    <div class="v-card"><p class="v-card-label">Runway</p><p class="v-card-value">18 mo</p><p class="v-card-change positive">Healthy</p></div>
+                    <div class="v-card"><p class="v-card-label">Cash Position</p><p class="v-card-value">$1.6M</p><p class="v-card-change neutral">Updated now</p></div>
+                  </div>
+                </div>
+
+                <!-- Panel 1: KPIs -->
+                <div class="panel-view" data-panel="1">
+                  <div class="v-header">
+                    <div><p class="v-label">KPIs</p><p class="v-title">Your Metrics</p></div>
+                  </div>
+                  <div class="v-stack">
+                    <div class="v-row"><div class="v-row-left"><div class="v-row-dot green"></div><span class="v-row-name">Gross Margin</span></div><span class="v-row-val">72%</span></div>
+                    <div class="v-row"><div class="v-row-left"><div class="v-row-dot green"></div><span class="v-row-name">CAC Payback</span></div><span class="v-row-val">6.2mo</span></div>
+                    <div class="v-row"><div class="v-row-left"><div class="v-row-dot amber"></div><span class="v-row-name">Net Revenue Retention</span></div><span class="v-row-val">108%</span></div>
+                    <div class="v-row"><div class="v-row-left"><div class="v-row-dot gray"></div><span class="v-row-name">Rule of 40</span></div><span class="v-row-val">52</span></div>
+                  </div>
+                </div>
+
+                <!-- Panel 2: Chat -->
+                <div class="panel-view" data-panel="2">
+                  <div class="v-header">
+                    <div><p class="v-label">Nova</p><p class="v-title">Ask anything</p></div>
+                  </div>
+                  <div class="v-stack">
+                    <div class="v-chat-q">Why did margins drop in March?</div>
+                    <div class="v-chat-a">Gross margin fell 3.2pp in March, driven primarily by a $34K spike in cloud infrastructure costs. This coincided with your traffic surge from the Product Hunt launch. Margins have since recovered to 71% in April.</div>
+                    <div class="v-chat-suggest"><span>Suggested: &ldquo;Show me infra costs by month&rdquo;</span></div>
+                  </div>
+                </div>
+
+                <!-- Panel 3: Scenarios -->
+                <div class="panel-view" data-panel="3">
+                  <div class="v-header">
+                    <div><p class="v-label">Scenarios</p><p class="v-title">Model the future</p></div>
+                  </div>
+                  <div class="v-stack">
+                    <div class="v-scenario">
+                      <div class="v-scenario-header"><span class="v-scenario-name">Base Case</span><span class="v-scenario-tag">Active</span></div>
+                      <div class="v-scenario-metrics"><div class="v-scenario-metric"><label>Runway</label><span>18 months</span></div><div class="v-scenario-metric"><label>Cash at 12mo</label><span>$820K</span></div></div>
+                    </div>
+                    <div class="v-scenario highlight">
+                      <div class="v-scenario-header"><span class="v-scenario-name teal">Delay Hiring 1 Quarter</span><span class="v-scenario-tag teal">+4 mo runway</span></div>
+                      <div class="v-scenario-metrics"><div class="v-scenario-metric"><label>Runway</label><span class="teal">22 months</span></div><div class="v-scenario-metric"><label>Cash at 12mo</label><span class="teal">$1.1M</span></div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Panel 4: Alerts -->
+                <div class="panel-view" data-panel="4">
+                  <div class="v-header">
+                    <div><p class="v-label">Alerts</p><p class="v-title">Always watching</p></div>
+                  </div>
+                  <div class="v-stack">
+                    <div class="v-alert amber"><p class="v-alert-type amber">HEADS UP</p><p class="v-alert-msg">Payroll costs trending 8% above forecast</p><p class="v-alert-time">Detected 2 hours ago</p></div>
+                    <div class="v-alert green"><p class="v-alert-type green">POSITIVE</p><p class="v-alert-msg">Revenue beat forecast by 14% this month</p><p class="v-alert-time">End of month summary</p></div>
+                    <div class="v-alert red"><p class="v-alert-type red">ACTION NEEDED</p><p class="v-alert-msg">Accounts receivable over 60 days: $42K</p><p class="v-alert-time">3 invoices affected</p></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="how">
+    <div class="container">
+      <div class="section-badge" style="background:#fff;">
+        <span class="section-badge-text">How it works</span>
+      </div>
+      <h2 class="how-h2">Three steps to<br><span>financial clarity.</span></h2>
+      <div class="how-grid">
+        <div>
+          <span class="how-step-num">01</span>
+          <h3 class="how-step-title">Connect</h3>
+          <p class="how-step-text">Link your accounting software, bank accounts, and financial tools. Setup takes minutes, not weeks.</p>
+        </div>
+        <div>
+          <span class="how-step-num">02</span>
+          <h3 class="how-step-title">Configure</h3>
+          <p class="how-step-text">Tell Unledgered your role, industry, and the metrics that matter. We build your personalised dashboard.</p>
+        </div>
+        <div>
+          <span class="how-step-num">03</span>
+          <h3 class="how-step-title">Clarity</h3>
+          <p class="how-step-text">Get real-time insights, ask questions in plain English, and receive proactive alerts. Your finances, understood.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-grid grid-bg"></div>
+    <div class="container" style="position:relative;">
+      <h2 class="cta-h2">Ready to take<br><span>control?</span></h2>
+      <p class="cta-sub">Join the waitlist for early access, or book a demo to see Unledgered in action. No credit card required.</p>
+      <form class="cta-form" onsubmit="handleWaitlist(event, this)">
+        <input type="email" class="waitlist-input" placeholder="Enter your email" required>
+        <button type="submit" class="btn-primary">Join Waitlist</button>
+      </form>
+      <a href="https://calendly.com" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+        Book a Demo
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M3 10L7 4L11 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="footer-logo-text">Unledgered</span>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <a href="/terms" class="footer-link">Terms of Service</a>
+      </div>
+      <p class="footer-copy">&copy; 2025 Unledgered. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Accordion ── */
+    let currentAccordion = 0;
+
+    function toggleAccordion(index) {
+      const items = document.querySelectorAll('.accordion-item');
+      const panels = document.querySelectorAll('.panel-view');
+
+      items.forEach((item, i) => {
+        const icon = item.querySelector('.accordion-icon svg');
+        if (i === index && !item.classList.contains('active')) {
+          item.classList.add('active');
+          icon.innerHTML = '<line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        } else if (i === index && item.classList.contains('active')) {
+          item.classList.remove('active');
+          icon.innerHTML = '<line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="4" x2="8" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        } else {
+          item.classList.remove('active');
+          icon.innerHTML = '<line x1="4" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="4" x2="8" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        }
+      });
+
+      panels.forEach((panel, i) => {
+        panel.classList.toggle('active', i === index && document.querySelectorAll('.accordion-item')[index].classList.contains('active'));
+      });
+
+      currentAccordion = index;
+    }
+
+    /* ── Waitlist form ── */
+    function handleWaitlist(e, form) {
+      e.preventDefault();
+      const input = form.querySelector('input');
+      const email = input.value;
+      if (!email) return;
+
+      form.innerHTML = '<div class="success-msg"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9L7.5 12.5L14 5.5" stroke="#0d9488" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>You\'re on the list. We\'ll be in touch.</span></div>';
+    }
+
+    /* ── Smooth scroll for nav links ── */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
